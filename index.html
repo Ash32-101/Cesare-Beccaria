@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cesare Beccaria — Presentación</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {
+      font-family:'Playfair Display', serif;
+      background: 
+        linear-gradient(rgba(15,10,20,0.85), rgba(10,8,12,0.9)),
+        url('https://brainybirdz.net/wp-content/uploads/2016/12/goldroom31.jpg') center/cover fixed;
+      color:#f5f2e8;
+      overflow-x:hidden;
+      min-height:100vh;
+    }
+    h1,h2 {
+      font-family:'Cinzel Decorative', cursive;
+      color:#f4e2b5;
+      text-shadow:0 0 8px rgba(255,215,155,0.4);
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    h1 {cursor:default; justify-content:center;}
+    h2 span.chevron {
+      transition:transform 0.4s ease;
+      font-size:1.2em;
+      color:#d6c392;
+      text-shadow:0 0 4px rgba(255,255,200,0.2);
+    }
+    .section.open h2 span.chevron { transform:rotate(180deg); }
+
+    /* Terminal Intro */
+    .terminal-overlay {
+      position:fixed;
+      inset:0;
+      background:radial-gradient(circle at 50% 50%, #1a0028 0%, #000 90%);
+      color:#caa0ff;
+      font-family:'Courier New',monospace;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+      border:2px solid #8033ff;
+      box-shadow:0 0 40px #8033ff, inset 0 0 20px rgba(128,51,255,0.4);
+      border-radius:8px;
+      overflow:hidden;
+      animation:fadeOutOverlay 2s ease 5.2s forwards;
+    }
+    .terminal-overlay::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      background:repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.04) 0px,
+        rgba(255,255,255,0.04) 1px,
+        transparent 2px,
+        transparent 3px
+      );
+      pointer-events:none;
+      animation:scanlines 3s infinite linear;
+    }
+    @keyframes scanlines { 
+      0% {background-position:0 0;} 
+      100% {background-position:0 3px;} 
+    }
+    .typed-text {
+      font-size:1.6rem;
+      border-right:2px solid #caa0ff;
+      white-space:nowrap;
+      overflow:hidden;
+      width:0;
+      animation:typing 3s steps(10) 0.5s forwards, blink 0.75s step-end infinite alternate;
+      text-shadow:0 0 10px #caa0ff, 0 0 20px #a570ff;
+    }
+    @keyframes typing { from {width:0;} to {width:10ch;} }
+    @keyframes blink { 50% {border-color:transparent;} }
+    .ascii-art {
+      white-space:pre;
+      font-size:14px;
+      opacity:0;
+      color:#b788ff;
+      text-shadow:0 0 10px #a86cff;
+      animation:fadeIn 2s 2s forwards;
+    }
+    @keyframes fadeIn {to{opacity:1;}}
+    @keyframes fadeOutOverlay {to{opacity:0; visibility:hidden;}}
+
+    /* Main content fade in */
+    main {
+      opacity:0;
+      transform:translateY(20px);
+      animation:fadeInMain 2s ease 6s forwards;
+      padding:2rem 1rem;
+    }
+    @keyframes fadeInMain {to{opacity:1; transform:translateY(0);}}
+
+    header {
+      text-align:center;
+      padding:3rem 1rem 2rem;
+    }
+    header p {
+      color:#e8dec5;
+      font-size:1.1rem;
+      opacity:0.8;
+    }
+
+    /* Section styling */
+    .section {
+      position:relative;
+      max-width:900px;
+      margin:2rem auto;
+      background:rgba(255,255,255,0.07);
+      border:1px solid rgba(255,255,255,0.2);
+      border-radius:20px;
+      backdrop-filter:blur(14px) saturate(150%);
+      box-shadow:0 0 25px rgba(0,0,0,0.4);
+      overflow:hidden;
+      transition:transform 0.4s ease, box-shadow 0.4s ease;
+      opacity:0;
+      transform:translateY(40px);
+      animation:fadeUp 1.2s forwards;
+    }
+    @keyframes fadeUp {to{opacity:1; transform:translateY(0);}}
+    .section:hover {
+      transform:scale(1.02);
+      box-shadow:0 0 35px rgba(255,215,155,0.2);
+    }
+    .section::before {
+      content:"";
+      position:absolute;
+      top:0;
+      left:-75%;
+      width:50%;
+      height:100%;
+      background:linear-gradient(120deg,transparent,rgba(255,255,255,0.15),transparent);
+      transform:skewX(-25deg);
+    }
+    .section:hover::before {
+      animation:shimmer 1.2s forwards;
+    }
+    @keyframes shimmer {100%{left:125%;}}
+
+    /* Collapsible content */
+    .content {
+      max-height:0;
+      opacity:0;
+      overflow:hidden;
+      transition:all 0.8s ease;
+      padding:0 2rem;
+    }
+    .section.open .content {
+      max-height:1200px;
+      opacity:1;
+      padding:1rem 2rem 2rem;
+    }
+    p {line-height:1.7; margin-bottom:1rem;}
+    .section img {
+      width:100%;
+      border-radius:12px;
+      margin:1rem 0;
+      filter:grayscale(40%) brightness(0.9);
+      transition:all 0.5s ease;
+      border:1px solid rgba(255,255,255,0.15);
+    }
+    .section img:hover {
+      filter:grayscale(0%) brightness(1.1);
+      transform:scale(1.02);
+    }
+
+    /* Morphine structure */
+    .morphine-box {
+      margin:3rem auto;
+      text-align:center;
+      font-family:'Courier New', monospace;
+      color:#b788ff;
+      text-shadow:0 0 10px #a86cff, 0 0 30px #a86cff;
+      white-space:pre;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.15);
+      border-radius:16px;
+      padding:1.5rem;
+      width:fit-content;
+      box-shadow:0 0 25px rgba(150,80,255,0.2);
+      animation:glowPulse 3s infinite ease-in-out;
+    }
+    @keyframes glowPulse {
+      0%,100% {text-shadow:0 0 10px #a86cff,0 0 20px #a86cff;}
+      50% {text-shadow:0 0 20px #b788ff,0 0 40px #b788ff;}
+    }
+
+    footer {
+      text-align:center;
+      padding:3rem;
+      color:#d6c1a1;
+      font-size:1.1rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Intro Overlay -->
+  <div class="terminal-overlay">
+    <div class="typed-text">m0rph!n3_</div>
+    <div class="ascii-art">
+    .      .'
+        :`...' `.,'  ' 
+    `.  ' .**.  ; ; ':
+    ` ``:`****,'  .' :
+  ..::.  ``**":.''   `.
+.:    `: ; `,'        :
+  `:    `   :         ;
+    :   :   :        ;
+    :    :   :     .:
+     :    :   :..,'  ``::.
+      `....:..'  ..:;''
+      .:   . ...::::
+     ,'''''``:::::::
+               `::::
+                 `::.
+                  `::
+           . ,.    ::::'      ,.. 
+         .'.'  ``.  ::      .'.. `.
+        '        .: ::    ,'.'     .
+      .' ,'    .::::::   ,.'    .:::.
+    .' .'  ..:'     ::: .,   .;'     ~
+   ,;::;.::''        ::.:..::'
+  ~                  ::;'
+                     ::
+                   ,:::
+                     ::.
+                     `::
+                      ::
+                      ::
+                      ::
+                      ::
+                      ::         
+    </div>
+  </div>
+
+  <main>
+    <header>
+      <h1>Cesare Beccaria</h1>
+      <p><em>Filósofo y jurista del Siglo de las Luces</em></p>
+    </header>
+
+    <section class="section">
+      <h2>Biografía <span class="chevron">▼</span></h2>
+      <div class="content">
+        <p>Cesare Beccaria nació en Milán en 1738. Fue un jurista, filósofo y economista italiano. Educado en el espíritu del humanismo y la Ilustración, se interesó profundamente por la justicia penal y las leyes.</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Cesare_Beccaria.jpg" alt="Cesare Beccaria">
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Principales Ideas y Aportaciones <span class="chevron">▼</span></h2>
+      <div class="content">
+        <p>Beccaria abogó por un sistema penal racional, justo y proporcional. Rechazó la tortura y la pena de muerte, proponiendo penas claras y moderadas para prevenir el delito más que castigarlo.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Obras Más Importantes <span class="chevron">▼</span></h2>
+      <div class="content">
+        <p>Su obra más influyente fue <em>"De los delitos y las penas"</em> (1764), donde critica las prácticas judiciales de su tiempo y sienta las bases del derecho penal moderno.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Impacto en su Época <span class="chevron">▼</span></h2>
+      <div class="content">
+        <p>Su pensamiento tuvo una gran repercusión en Europa. Inspiró reformas judiciales y fue admirado por figuras como Voltaire y Montesquieu.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Influencia en la Actualidad <span class="chevron">▼</span></h2>
+      <div class="content">
+        <p>Sus ideas siguen presentes en los sistemas jurídicos modernos, en los derechos humanos y en la abolición de la pena de muerte en numerosos países.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Reflexión <span class="chevron">▼</span></h2>
+      <div class="content">
+        <p>Beccaria sigue siendo un faro de justicia y razón. Su énfasis en la humanidad, la proporcionalidad y la prevención son pilares de un mundo más ético y justo.</p>
+      </div>
+    </section>
+
+    <div class="morphine-box">
+     Balanza 
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠁⠈⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⠁⣀⣀⣀⣉⣁⣀⣀⠀⠀⠀⠀⠀⠀⣀⣀⣉⣉⣀⣀⣀⠈⣿⣿⣿⣿
+⣿⣿⣿⠇⡀⠹⣿⣿⣿⣿⣿⣿⣿⣦⡀⢀⣶⣿⣿⣿⣿⣿⣿⣿⠇⠀⢹⣿⣿⣿
+⣿⣿⡟⢠⣿⡄⠹⣿⣿⣿⣿⣿⣿⣿⠁⠘⣿⣿⣿⣿⣿⣿⣿⠏⢠⣿⡄⢻⣿⣿
+⣿⡿⠁⣼⣿⣿⡀⢻⣿⣿⣿⣿⣿⡟⠀⠀⢿⣿⣿⣿⣿⣿⡟⢀⣿⣿⣧⠈⢿⣿
+⣿⠃⠰⠿⠿⠿⠷⠀⢿⣿⣿⣿⣿⠇⠀⠀⢸⣿⣿⣿⣿⡿⠀⠼⠿⠿⠿⠇⠘⣿
+⣿⡄⠀⠀⠀⠀⠀⠀⣼⣿⣿⣿⣿⠀⠀⠀⠀⣿⣿⣿⣿⣷⡀⠀⠀⠀⠀⠀⢀⣿
+⣿⣿⣶⣤⣤⣤⣴⣾⣿⣿⣿⣿⡇⠀⠀⠀⠀⢹⣿⣿⣿⣿⣷⣦⣤⣤⣤⣶⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣋⣉⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣉⣙⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+    </div>
+
+    <footer>
+      <p>Hecho con elegancia por <strong>m0rph!n3_</strong></p>
+    </footer>
+  </main>
+
+  <script>
+    document.querySelectorAll('.section').forEach(section => {
+      const header = section.querySelector('h2');
+      header.addEventListener('click', () => {
+        section.classList.toggle('open');
+      });
+    });
+  </script>
+</body>
+</html>

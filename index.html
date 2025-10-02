@@ -66,10 +66,7 @@
       pointer-events:none;
       animation:scanlines 3s infinite linear;
     }
-    @keyframes scanlines { 
-      0% {background-position:0 0;} 
-      100% {background-position:0 3px;} 
-    }
+    @keyframes scanlines { 0% {background-position:0 0;} 100% {background-position:0 3px;} }
     .typed-text {
       font-size:1.6rem;
       border-right:2px solid #caa0ff;
@@ -161,10 +158,15 @@
       padding:1rem 2rem 2rem;
     }
     p {line-height:1.7; margin-bottom:1rem;}
+
+    /* Adjusted image size */
     .section img {
-      width:100%;
+      width:50%; /* smaller size */
+      max-width:250px;
+      height:auto;
+      display:block;
+      margin:1rem auto;
       border-radius:12px;
-      margin:1rem 0;
       filter:grayscale(40%) brightness(0.9);
       transition:all 0.5s ease;
       border:1px solid rgba(255,255,255,0.15);
@@ -208,38 +210,7 @@
   <div class="terminal-overlay">
     <div class="typed-text">m0rph!n3_</div>
     <div class="ascii-art">
-    .      .'
-        :`...' `.,'  ' 
-    `.  ' .**.  ; ; ':
-    ` ``:`****,'  .' :
-  ..::.  ``**":.''   `.
-.:    `: ; `,'        :
-  `:    `   :         ;
-    :   :   :        ;
-    :    :   :     .:
-     :    :   :..,'  ``::.
-      `....:..'  ..:;''
-      .:   . ...::::
-     ,'''''``:::::::
-               `::::
-                 `::.
-                  `::
-           . ,.    ::::'      ,.. 
-         .'.'  ``.  ::      .'.. `.
-        '        .: ::    ,'.'     .
-      .' ,'    .::::::   ,.'    .:::.
-    .' .'  ..:'     ::: .,   .;'     ~
-   ,;::;.::''        ::.:..::'
-  ~                  ::;'
-                     ::
-                   ,:::
-                     ::.
-                     `::
-                      ::
-                      ::
-                      ::
-                      ::
-                      ::         
+
     </div>
   </div>
 
@@ -293,7 +264,7 @@
     </section>
 
     <div class="morphine-box">
-     Balanza 
+     Balanza  
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠁⠈⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿

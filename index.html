@@ -129,20 +129,6 @@
       transform:scale(1.02);
       box-shadow:0 0 35px rgba(255,215,155,0.2);
     }
-    .section::before {
-      content:"";
-      position:absolute;
-      top:0;
-      left:-75%;
-      width:50%;
-      height:100%;
-      background:linear-gradient(120deg,transparent,rgba(255,255,255,0.15),transparent);
-      transform:skewX(-25deg);
-    }
-    .section:hover::before {
-      animation:shimmer 1.2s forwards;
-    }
-    @keyframes shimmer {100%{left:125%;}}
 
     /* Collapsible content */
     .content {
@@ -161,7 +147,7 @@
 
     /* Adjusted image size */
     .section img {
-      width:50%; /* smaller size */
+      width:50%;
       max-width:250px;
       height:auto;
       display:block;
@@ -206,12 +192,9 @@
   </style>
 </head>
 <body>
-  <!-- Intro Overlay -->
   <div class="terminal-overlay">
     <div class="typed-text">m0rph!n3_</div>
-    <div class="ascii-art">
-      
-    </div>
+    <div class="ascii-art"></div>
   </div>
 
   <main>
@@ -264,22 +247,8 @@
     </section>
 
     <div class="morphine-box">
-     Balance 
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠁⠈⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⠁⣀⣀⣀⣉⣁⣀⣀⠀⠀⠀⠀⠀⠀⣀⣀⣉⣉⣀⣀⣀⠈⣿⣿⣿⣿
-⣿⣿⣿⠇⡀⠹⣿⣿⣿⣿⣿⣿⣿⣦⡀⢀⣶⣿⣿⣿⣿⣿⣿⣿⠇⠀⢹⣿⣿⣿
-⣿⣿⡟⢠⣿⡄⠹⣿⣿⣿⣿⣿⣿⣿⠁⠘⣿⣿⣿⣿⣿⣿⣿⠏⢠⣿⡄⢻⣿⣿
-⣿⡿⠁⣼⣿⣿⡀⢻⣿⣿⣿⣿⣿⡟⠀⠀⢿⣿⣿⣿⣿⣿⡟⢀⣿⣿⣧⠈⢿⣿
-⣿⠃⠰⠿⠿⠿⠷⠀⢿⣿⣿⣿⣿⠇⠀⠀⢸⣿⣿⣿⣿⡿⠀⠼⠿⠿⠿⠇⠘⣿
-⣿⡄⠀⠀⠀⠀⠀⠀⣼⣿⣿⣿⣿⠀⠀⠀⠀⣿⣿⣿⣿⣷⡀⠀⠀⠀⠀⠀⢀⣿
-⣿⣿⣶⣤⣤⣤⣴⣾⣿⣿⣿⣿⡇⠀⠀⠀⠀⢹⣿⣿⣿⣿⣷⣦⣤⣤⣤⣶⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣋⣉⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣉⣙⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+      Balance 
+      
     </div>
 
     <footer>
@@ -297,4 +266,3 @@
   </script>
 </body>
 </html>
-

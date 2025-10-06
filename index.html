@@ -9,247 +9,154 @@
     * {margin:0; padding:0; box-sizing:border-box;}
     body {
       font-family:'Playfair Display', serif;
-      background: 
-        linear-gradient(rgba(15,10,20,0.85), rgba(10,8,12,0.9)),
-        url('https://brainybirdz.net/wp-content/uploads/2016/12/goldroom31.jpg') center/cover fixed;
+      background: linear-gradient(rgba(15,10,20,0.85), rgba(10,8,12,0.9)),
+                  url('https://brainybirdz.net/wp-content/uploads/2016/12/goldroom31.jpg') center/cover fixed;
       color:#f5f2e8;
       overflow-x:hidden;
       min-height:100vh;
     }
-    h1,h2 {
-      font-family:'Cinzel Decorative', cursive;
-      color:#f4e2b5;
-      text-shadow:0 0 8px rgba(255,215,155,0.4);
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-    }
-    h1 {cursor:default; justify-content:center;}
-    h2 span.chevron {
-      transition:transform 0.4s ease;
-      font-size:1.2em;
-      color:#d6c392;
-      text-shadow:0 0 4px rgba(255,255,200,0.2);
-    }
-    .section.open h2 span.chevron { transform:rotate(180deg); }
-
-    /* Terminal Intro */
-    .terminal-overlay {
-      position:fixed;
-      inset:0;
-      background:radial-gradient(circle at 50% 50%, #1a0028 0%, #000 90%);
-      color:#caa0ff;
-      font-family:'Courier New',monospace;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      z-index:9999;
-      border:2px solid #8033ff;
-      box-shadow:0 0 40px #8033ff, inset 0 0 20px rgba(128,51,255,0.4);
-      border-radius:8px;
-      overflow:hidden;
-      animation:fadeOutOverlay 2s ease 5.2s forwards;
-    }
-    .terminal-overlay::before {
-      content:"";
-      position:absolute;
-      inset:0;
-      background:repeating-linear-gradient(
-        to bottom,
-        rgba(255,255,255,0.04) 0px,
-        rgba(255,255,255,0.04) 1px,
-        transparent 2px,
-        transparent 3px
-      );
-      pointer-events:none;
-      animation:scanlines 3s infinite linear;
-    }
-    @keyframes scanlines { 0% {background-position:0 0;} 100% {background-position:0 3px;} }
-    .typed-text {
-      font-size:1.6rem;
-      border-right:2px solid #caa0ff;
-      white-space:nowrap;
-      overflow:hidden;
-      width:0;
-      animation:typing 3s steps(10) 0.5s forwards, blink 0.75s step-end infinite alternate;
-      text-shadow:0 0 10px #caa0ff, 0 0 20px #a570ff;
-    }
-    @keyframes typing { from {width:0;} to {width:10ch;} }
-    @keyframes blink { 50% {border-color:transparent;} }
-    .ascii-art {
-      white-space:pre;
-      font-size:14px;
-      opacity:0;
-      color:#b788ff;
-      text-shadow:0 0 10px #a86cff;
-      animation:fadeIn 2s 2s forwards;
-    }
-    @keyframes fadeIn {to{opacity:1;}}
-    @keyframes fadeOutOverlay {to{opacity:0; visibility:hidden;}}
-
-    /* Main content fade in */
-    main {
-      opacity:0;
-      transform:translateY(20px);
-      animation:fadeInMain 2s ease 6s forwards;
-      padding:2rem 1rem;
-    }
-    @keyframes fadeInMain {to{opacity:1; transform:translateY(0);}}
-
-    header {
-      text-align:center;
-      padding:3rem 1rem 2rem;
-    }
-    header p {
-      color:#e8dec5;
-      font-size:1.1rem;
-      opacity:0.8;
-    }
-
-    /* Section styling */
-    .section {
-      position:relative;
-      max-width:900px;
-      margin:2rem auto;
-      background:rgba(255,255,255,0.07);
-      border:1px solid rgba(255,255,255,0.2);
-      border-radius:20px;
-      backdrop-filter:blur(14px) saturate(150%);
-      box-shadow:0 0 25px rgba(0,0,0,0.4);
-      overflow:hidden;
-      transition:transform 0.4s ease, box-shadow 0.4s ease;
-      opacity:0;
-      transform:translateY(40px);
-      animation:fadeUp 1.2s forwards;
-    }
-    @keyframes fadeUp {to{opacity:1; transform:translateY(0);}}
-    .section:hover {
-      transform:scale(1.02);
-      box-shadow:0 0 35px rgba(255,215,155,0.2);
-    }
-
-    /* Collapsible content */
-    .content {
-      max-height:0;
-      opacity:0;
-      overflow:hidden;
-      transition:all 0.8s ease;
-      padding:0 2rem;
-    }
-    .section.open .content {
-      max-height:1200px;
-      opacity:1;
-      padding:1rem 2rem 2rem;
-    }
-    p {line-height:1.7; margin-bottom:1rem;}
-
-    /* Adjusted image size */
-    .section img {
-      width:50%;
-      max-width:250px;
-      height:auto;
-      display:block;
-      margin:1rem auto;
-      border-radius:12px;
-      filter:grayscale(40%) brightness(0.9);
-      transition:all 0.5s ease;
-      border:1px solid rgba(255,255,255,0.15);
-    }
-    .section img:hover {
-      filter:grayscale(0%) brightness(1.1);
-      transform:scale(1.02);
-    }
-
-    /* Morphine structure */
-    .morphine-box {
-      margin:3rem auto;
-      text-align:center;
-      font-family:'Courier New', monospace;
-      color:#b788ff;
-      text-shadow:0 0 10px #a86cff, 0 0 30px #a86cff;
-      white-space:pre;
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.15);
-      border-radius:16px;
-      padding:1.5rem;
-      width:fit-content;
-      box-shadow:0 0 25px rgba(150,80,255,0.2);
-      animation:glowPulse 3s infinite ease-in-out;
-    }
-    @keyframes glowPulse {
-      0%,100% {text-shadow:0 0 10px #a86cff,0 0 20px #a86cff;}
-      50% {text-shadow:0 0 20px #b788ff,0 0 40px #b788ff;}
-    }
-
-    footer {
-      text-align:center;
-      padding:3rem;
-      color:#d6c1a1;
-      font-size:1.1rem;
-    }
+    h1,h2 {font-family:'Cinzel Decorative', cursive; color:#f4e2b5;}
+    h1 {text-align:center; margin-bottom:0.5rem;}
+    h2 {cursor:pointer; margin:1rem 0; display:flex; justify-content:space-between; align-items:center;}
+    h2 span.chevron {transition:transform 0.4s ease;}
+    .section.open h2 span.chevron {transform:rotate(180deg);}
+    main {padding:2rem 1rem;}
+    header {text-align:center; padding:3rem 1rem 2rem;}
+    header p {font-size:1.1rem; color:#e8dec5; opacity:0.8;}
+    .section {max-width:900px; margin:2rem auto; background:rgba(255,255,255,0.07); border-radius:16px; backdrop-filter:blur(10px); overflow:hidden; transition:all 0.4s ease;}
+    .section:hover {transform:scale(1.01);}
+    .content {max-height:0; overflow:hidden; transition:all 0.6s ease; padding:0 2rem;}
+    .section.open .content {max-height:2000px; padding:1rem 2rem;}
+    p {margin-bottom:1rem; line-height:1.6;}
+    .section img {width:50%; max-width:250px; height:auto; display:block; margin:1rem auto; border-radius:12px; filter:grayscale(40%) brightness(0.9);}
+    .section img:hover {filter:grayscale(0) brightness(1.1);}
+    .work-card {background:rgba(255,255,255,0.05); border-radius:12px; margin:1rem 0; padding:1rem; cursor:pointer; transition:all 0.3s ease;}
+    .work-card:hover {background:rgba(255,255,255,0.1);}
+    .work-description {max-height:0; overflow:hidden; transition:max-height 0.5s ease; padding-left:0.5rem;}
+    .work-card.open .work-description {max-height:500px; margin-top:0.5rem;}
+    .trial-box {background:rgba(255,255,255,0.05); border-radius:12px; padding:1rem; max-width:700px; margin:2rem auto; text-align:center;}
+    button {margin:0.5rem; padding:0.5rem 1rem; border:none; border-radius:6px; cursor:pointer; font-weight:bold;}
+    button:hover {background:rgba(255,255,255,0.2);}
+    footer {text-align:center; padding:2rem; color:#d6c1a1;}
+    .bibliography {max-width:900px; margin:2rem auto; padding:1rem; background:rgba(255,255,255,0.05); border-radius:12px;}
+    .bibliography h3 {margin-bottom:1rem;}
+    .bibliography ul {list-style:decimal; padding-left:1.5rem;}
+    .bibliography a {color:#d6c1a1;}
   </style>
 </head>
 <body>
-  <div class="terminal-overlay">
-    <div class="typed-text">m0rph!n3_</div>
-    <div class="ascii-art"></div>
-  </div>
-
   <main>
     <header>
       <h1>Cesare Beccaria</h1>
       <p><em>Filósofo y jurista del Siglo de las Luces</em></p>
     </header>
 
+    <!-- Biografía -->
     <section class="section">
       <h2>Biografía <span class="chevron">▼</span></h2>
       <div class="content">
-        <p>Cesare Beccaria nació en Milán en 1738. Fue un jurista, filósofo y economista italiano. Educado en el espíritu del humanismo y la Ilustración, se interesó profundamente por la justicia penal y las leyes.</p>
+        <p>Cesare Bonesana Beccaria nació en Milán en 1738 y murió en 1794. Fue jurista, filósofo y economista italiano, conocido como pionero en el pensamiento penal moderno. Sus ideas influyeron en la abolición de la tortura y la pena de muerte en muchos países.</p>
         <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Cesare_Beccaria.jpg" alt="Cesare Beccaria">
+        <p><strong>Fuente:</strong> <a href="https://es.wikipedia.org/wiki/Cesare_Beccaria" target="_blank">Wikipedia</a></p>
       </div>
     </section>
 
+    <!-- Obras -->
     <section class="section">
-      <h2>Principales Ideas y Aportaciones <span class="chevron">▼</span></h2>
+      <h2>Principales Obras <span class="chevron">▼</span></h2>
       <div class="content">
-        <p>Beccaria abogó por un sistema penal racional, justo y proporcional. Rechazó la tortura y la pena de muerte, proponiendo penas claras y moderadas para prevenir el delito más que castigarlo.</p>
+        <div class="work-card">
+          <p><strong>De los delitos y las penas (1764)</strong></p>
+          <div class="work-description">
+            <p>Crítica las leyes penales de la época, rechaza la tortura y propone penas proporcionales al delito. Es la base del derecho penal moderno.</p>
+          </div>
+        </div>
+        <div class="work-card">
+          <p><strong>Opúsculos filosóficos y económicos</strong></p>
+          <div class="work-description">
+            <p>Ensayos sobre economía, moral y justicia que influyeron en la política y la filosofía del siglo XVIII.</p>
+          </div>
+        </div>
+        <div class="work-card">
+          <p><strong>Comentarios sobre Beccaria</strong></p>
+          <div class="work-description">
+            <p>Recopilaciones de correspondencia y reflexiones sobre la justicia y la ley, donde se expanden sus ideas sobre proporcionalidad y derechos humanos.</p>
+          </div>
+        </div>
+        <p><strong>Fuente:</strong> <a href="https://www.britannica.com/biography/Cesare-Beccaria" target="_blank">Encyclopaedia Britannica</a></p>
       </div>
     </section>
 
+    <!-- Ideas -->
     <section class="section">
-      <h2>Obras Más Importantes <span class="chevron">▼</span></h2>
+      <h2>Principales Ideas <span class="chevron">▼</span></h2>
       <div class="content">
-        <p>Su obra más influyente fue <em>"De los delitos y las penas"</em> (1764), donde critica las prácticas judiciales de su tiempo y sienta las bases del derecho penal moderno.</p>
+        <p>Beccaria promovía un sistema penal racional, justo y proporcional. Rechazaba la tortura y la pena de muerte, proponiendo que la prevención del delito debía ser el objetivo principal del castigo.</p>
+        <ul>
+          <li>Proporcionalidad de las penas</li>
+          <li>Legalidad y certeza de la ley</li>
+          <li>Derechos humanos como base del derecho penal</li>
+        </ul>
+        <p><strong>Fuente:</strong> <a href="https://plato.stanford.edu/entries/beccaria/" target="_blank">Stanford Encyclopedia of Philosophy</a></p>
       </div>
     </section>
 
+    <!-- Impacto -->
     <section class="section">
-      <h2>Impacto en su Época <span class="chevron">▼</span></h2>
+      <h2>Impacto en su época <span class="chevron">▼</span></h2>
       <div class="content">
-        <p>Su pensamiento tuvo una gran repercusión en Europa. Inspiró reformas judiciales y fue admirado por figuras como Voltaire y Montesquieu.</p>
+        <p>Su obra influyó en reformas judiciales en toda Europa y fue admirado por figuras como Voltaire y Montesquieu. Su pensamiento ayudó a establecer bases para los derechos humanos y sistemas judiciales modernos.</p>
+        <p><strong>Fuente:</strong> <a href="https://es.wikipedia.org/wiki/De_los_delitos_y_las_penas" target="_blank">Wikipedia</a></p>
       </div>
     </section>
 
+    <!-- Influencia actual -->
     <section class="section">
       <h2>Influencia en la Actualidad <span class="chevron">▼</span></h2>
       <div class="content">
-        <p>Sus ideas siguen presentes en los sistemas jurídicos modernos, en los derechos humanos y en la abolición de la pena de muerte en numerosos países.</p>
+        <p>Las ideas de Beccaria siguen presentes en leyes modernas, derechos humanos, sistemas judiciales y la abolición de la pena de muerte en varios países.</p>
+        <p><strong>Fuente:</strong> <a href="https://www.britannica.com/biography/Cesare-Beccaria" target="_blank">Encyclopaedia Britannica</a></p>
       </div>
     </section>
 
+    <!-- Simulación de juicio -->
     <section class="section">
-      <h2>Reflexión <span class="chevron">▼</span></h2>
+      <h2>Simulación de Juicio <span class="chevron">▼</span></h2>
       <div class="content">
-        <p>Beccaria sigue siendo un faro de justicia y razón. Su énfasis en la humanidad, la proporcionalidad y la prevención son pilares de un mundo más ético y justo.</p>
+        <div class="trial-box" id="trialBox">
+          <p><strong>Acusado:</strong> Juan por robo menor.</p>
+          <p>¿Cuál debería ser el castigo según Beccaria?</p>
+          <button onclick="veredicto('Multa')">Multa</button>
+          <button onclick="veredicto('Prisión corta')">Prisión corta</button>
+          <button onclick="veredicto('Tortura')">Tortura</button>
+          <p id="verdict" style="margin-top:1rem;"></p>
+        </div>
+        <script>
+          function veredicto(option) {
+            const verdict = document.getElementById('verdict');
+            if(option === 'Tortura'){
+              verdict.innerHTML = "❌ Beccaria rechazaría la tortura. Castigo proporcional y humano.";
+            } else {
+              verdict.innerHTML = "✅ Correcto. Beccaria propondría: " + option;
+            }
+          }
+        </script>
       </div>
     </section>
 
-    <div class="morphine-box">
-      Balance 
-      
-    </div>
+    <!-- Bibliografía -->
+    <section class="section">
+      <h2>Bibliografía <span class="chevron">▼</span></h2>
+      <div class="content bibliography">
+        <h3>Fuentes Consultadas:</h3>
+        <ul>
+          <li><a href="https://es.wikipedia.org/wiki/Cesare_Beccaria" target="_blank">Wikipedia: Cesare Beccaria</a></li>
+          <li><a href="https://www.britannica.com/biography/Cesare-Beccaria" target="_blank">Encyclopaedia Britannica: Cesare Beccaria</a></li>
+          <li><a href="https://plato.stanford.edu/entries/beccaria/" target="_blank">Stanford Encyclopedia of Philosophy: Beccaria</a></li>
+          <li><a href="https://es.wikipedia.org/wiki/De_los_delitos_y_las_penas" target="_blank">Wikipedia: De los delitos y las penas</a></li>
+        </ul>
+      </div>
+    </section>
 
     <footer>
       <p>Hecho con HTML-CSS por <strong>m0rph!n3_</strong></p>
@@ -258,10 +165,14 @@
 
   <script>
     document.querySelectorAll('.section').forEach(section => {
-      const header = section.querySelector('h2');
-      header.addEventListener('click', () => {
+      section.querySelector('h2').addEventListener('click', () => {
         section.classList.toggle('open');
       });
+    });
+
+    // Work cards collapsible
+    document.querySelectorAll('.work-card').forEach(card => {
+      card.addEventListener('click', () => card.classList.toggle('open'));
     });
   </script>
 </body>

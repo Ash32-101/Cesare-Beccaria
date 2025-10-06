@@ -3,359 +3,297 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cesare Beccaria — The Code of Justice</title>
+  <title>Cesare Beccaria — Presentación</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet" />
   <style>
-    :root{--accent:#7df39a; --muted:#dcd6c9; --glass:rgba(255,255,255,0.04);}
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:'Playfair Display',serif;background:linear-gradient(180deg,#060407 0%, #0b0710 100%), url('https://brainybirdz.net/wp-content/uploads/2016/12/goldroom31.jpg') center/cover fixed;color:#efe9db}
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {
+      font-family:'Playfair Display', serif;
+      background: 
+        linear-gradient(rgba(15,10,20,0.85), rgba(10,8,12,0.9)),
+        url('https://brainybirdz.net/wp-content/uploads/2016/12/goldroom31.jpg') center/cover fixed;
+      color:#f5f2e8;
+      overflow-x:hidden;
+      min-height:100vh;
+    }
+    h1,h2 {
+      font-family:'Cinzel Decorative', cursive;
+      color:#f4e2b5;
+      text-shadow:0 0 8px rgba(255,215,155,0.4);
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    h1 {cursor:default; justify-content:center;}
+    h2 span.chevron {
+      transition:transform 0.4s ease;
+      font-size:1.2em;
+      color:#d6c392;
+      text-shadow:0 0 4px rgba(255,255,200,0.2);
+    }
+    .section.open h2 span.chevron { transform:rotate(180deg); }
 
-    /* ---- DUMB TERMINAL INTRO (only this part looks like a dumb terminal) ---- */
-    .terminal-intro{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;color:#9aff9a;font-family:monospace;padding:2rem}
-    .term-window{width:min(820px,92vw);max-width:920px;background:#001100;border:4px solid #083;box-shadow:0 30px 80px rgba(0,0,0,0.8);padding:1.25rem;border-radius:6px}
-    .term-line{font-family:monospace;white-space:pre-wrap;line-height:1.45;}
-    .cursor{display:inline-block;width:10px;height:18px;background:#9aff9a;margin-left:6px;vertical-align:bottom;animation:blink 0.8s steps(1) infinite}
-    @keyframes blink{50%{opacity:0}}
-    .typing{overflow:hidden;display:inline-block}
-    .fade-out{animation:fadeOut 0.9s ease forwards;animation-delay:3.6s}
-    @keyframes fadeOut{to{opacity:0;visibility:hidden;transform:translateY(-10px)}}
+    /* Terminal Intro */
+    .terminal-overlay {
+      position:fixed;
+      inset:0;
+      background:radial-gradient(circle at 50% 50%, #1a0028 0%, #000 90%);
+      color:#caa0ff;
+      font-family:'Courier New',monospace;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+      border:2px solid #8033ff;
+      box-shadow:0 0 40px #8033ff, inset 0 0 20px rgba(128,51,255,0.4);
+      border-radius:8px;
+      overflow:hidden;
+      animation:fadeOutOverlay 2s ease 5.2s forwards;
+    }
+    .terminal-overlay::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      background:repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.04) 0px,
+        rgba(255,255,255,0.04) 1px,
+        transparent 2px,
+        transparent 3px
+      );
+      pointer-events:none;
+      animation:scanlines 3s infinite linear;
+    }
+    @keyframes scanlines { 0% {background-position:0 0;} 100% {background-position:0 3px;} }
+    .typed-text {
+      font-size:1.6rem;
+      border-right:2px solid #caa0ff;
+      white-space:nowrap;
+      overflow:hidden;
+      width:0;
+      animation:typing 3s steps(10) 0.5s forwards, blink 0.75s step-end infinite alternate;
+      text-shadow:0 0 10px #caa0ff, 0 0 20px #a570ff;
+    }
+    @keyframes typing { from {width:0;} to {width:10ch;} }
+    @keyframes blink { 50% {border-color:transparent;} }
+    .ascii-art {
+      white-space:pre;
+      font-size:14px;
+      opacity:0;
+      color:#b788ff;
+      text-shadow:0 0 10px #a86cff;
+      animation:fadeIn 2s 2s forwards;
+    }
+    @keyframes fadeIn {to{opacity:1;}}
+    @keyframes fadeOutOverlay {to{opacity:0; visibility:hidden;}}
 
-    /* small ASCII header */
-    .ascii{color:#8cff8c;font-family:monospace;text-align:left;font-size:12px;margin-bottom:10px}
+    /* Main content fade in */
+    main {
+      opacity:0;
+      transform:translateY(20px);
+      animation:fadeInMain 2s ease 6s forwards;
+      padding:2rem 1rem;
+    }
+    @keyframes fadeInMain {to{opacity:1; transform:translateY(0);}}
 
-    /* ---- MAIN CONTENT (clean UI) ---- */
-    main{opacity:0;transform:translateY(12px);transition:opacity .6s ease 1s, transform .6s ease 1s;max-width:980px;margin:5rem auto;padding:1.5rem}
-    main.show{opacity:1;transform:none}
-    header{text-align:center;margin-bottom:1rem}
-    h1{font-family:'Cinzel Decorative',cursive;margin:0;color:#f7e9c9}
-    p.lead{color:var(--muted);margin-top:.35rem}
+    header {
+      text-align:center;
+      padding:3rem 1rem 2rem;
+    }
+    header p {
+      color:#e8dec5;
+      font-size:1.1rem;
+      opacity:0.8;
+    }
 
-    /* sections */
-    .card{background:var(--glass);padding:1rem;border-radius:12px;margin:1rem 0;border:1px solid rgba(255,255,255,0.06);backdrop-filter:blur(6px)}
-    .row{display:flex;gap:1rem;align-items:flex-start}
-    .portrait{width:40%;max-width:180px;border-radius:8px;display:block;margin:0 auto;filter:grayscale(.25) brightness(.95);border:1px solid rgba(255,255,255,0.06)}
+    /* Section styling */
+    .section {
+      position:relative;
+      max-width:900px;
+      margin:2rem auto;
+      background:rgba(255,255,255,0.07);
+      border:1px solid rgba(255,255,255,0.2);
+      border-radius:20px;
+      backdrop-filter:blur(14px) saturate(150%);
+      box-shadow:0 0 25px rgba(0,0,0,0.4);
+      overflow:hidden;
+      transition:transform 0.4s ease, box-shadow 0.4s ease;
+      opacity:0;
+      transform:translateY(40px);
+      animation:fadeUp 1.2s forwards;
+    }
+    @keyframes fadeUp {to{opacity:1; transform:translateY(0);}}
+    .section:hover {
+      transform:scale(1.02);
+      box-shadow:0 0 35px rgba(255,215,155,0.2);
+    }
+    .section::before {
+      content:"";
+      position:absolute;
+      top:0;
+      left:-75%;
+      width:50%;
+      height:100%;
+      background:linear-gradient(120deg,transparent,rgba(255,255,255,0.15),transparent);
+      transform:skewX(-25deg);
+    }
+    .section:hover::before {
+      animation:shimmer 1.2s forwards;
+    }
+    @keyframes shimmer {100%{left:125%;}}
 
-    /* collapsible */
-    .collapsible{cursor:pointer;display:flex;align-items:center;justify-content:space-between}
-    .collapsible .caret{transition:transform .28s ease}
-    .content{max-height:0;overflow:hidden;transition:max-height .5s ease,padding .28s ease}
-    .open .content{padding:0.6rem 0 0.8rem;max-height:420px}
+    /* Collapsible content */
+    .content {
+      max-height:0;
+      opacity:0;
+      overflow:hidden;
+      transition:all 0.8s ease;
+      padding:0 2rem;
+    }
+    .section.open .content {
+      max-height:1200px;
+      opacity:1;
+      padding:1rem 2rem 2rem;
+    }
+    p {line-height:1.7; margin-bottom:1rem;}
 
-    ul{margin:0.4rem 0 0.4rem 1.1rem}
+    /* Adjusted image size */
+    .section img {
+      width:50%; /* smaller size */
+      max-width:250px;
+      height:auto;
+      display:block;
+      margin:1rem auto;
+      border-radius:12px;
+      filter:grayscale(40%) brightness(0.9);
+      transition:all 0.5s ease;
+      border:1px solid rgba(255,255,255,0.15);
+    }
+    .section img:hover {
+      filter:grayscale(0%) brightness(1.1);
+      transform:scale(1.02);
+    }
 
-    footer{margin-top:1.5rem;text-align:center;color:var(--muted);font-size:0.95rem}
-    footer strong{cursor:pointer;color:#f1f0e6}
+    /* Morphine structure */
+    .morphine-box {
+      margin:3rem auto;
+      text-align:center;
+      font-family:'Courier New', monospace;
+      color:#b788ff;
+      text-shadow:0 0 10px #a86cff, 0 0 30px #a86cff;
+      white-space:pre;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.15);
+      border-radius:16px;
+      padding:1.5rem;
+      width:fit-content;
+      box-shadow:0 0 25px rgba(150,80,255,0.2);
+      animation:glowPulse 3s infinite ease-in-out;
+    }
+    @keyframes glowPulse {
+      0%,100% {text-shadow:0 0 10px #a86cff,0 0 20px #a86cff;}
+      50% {text-shadow:0 0 20px #b788ff,0 0 40px #b788ff;}
+    }
 
-    /* secret terminal button (hidden until revealed) */
-    .secret-wrap{position:fixed;right:18px;bottom:18px;z-index:9000}
-    .secret-btn{display:none;padding:0.55rem .75rem;border-radius:8px;border:none;background:#072; color:#bfffcf;font-family:monospace;box-shadow:0 6px 20px rgba(0,0,0,0.6);cursor:pointer}
-    .secret-btn.visible{display:inline-block}
-
-    /* LOGIN modal styled like terminal */
-    .modal-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:10000}
-    .modal-backdrop.show{display:flex}
-    .login-term{width:min(760px,94vw);max-width:760px;background:#041003;border-radius:8px;padding:1rem;border:3px solid #0a330a;box-shadow:0 30px 80px rgba(0,0,0,0.7);color:#bfffcf;font-family:monospace}
-    .prompt{background:#071207;padding:.8rem;border-radius:6px;border:1px solid rgba(255,255,255,0.02)}
-    label{display:block;font-size:0.92rem;color:#dfffdc;margin-bottom:6px}
-    input[type=text],input[type=password]{width:100%;padding:.55rem;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#dfffdc}
-    .login-actions{display:flex;gap:.5rem;margin-top:.6rem}
-    .btn{padding:.55rem .7rem;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--muted);cursor:pointer}
-    .btn.primary{background:#0d4b0d;color:#061005;border:none}
-    .note{font-size:0.85rem;color:#cfefd1;margin-top:.5rem}
-
-    /* terminal-sim area */
-    .terminal-sim{background:#020602;color:#9fffa1;padding:.8rem;border-radius:6px;font-family:monospace;min-height:140px;overflow:auto;white-space:pre-wrap}
-    .input-row{display:flex;gap:.5rem;margin-top:.6rem}
-    .sim-input{flex:1;padding:.5rem;border-radius:6px;border:1px solid rgba(0,0,0,0.2);background:#f6fff6}
-
-    /* verdict styles */
-    .verdict{margin-top:.6rem;padding:.65rem;border-radius:6px;background:rgba(255,255,255,0.03);font-weight:700}
-
-    @media (max-width:720px){.row{flex-direction:column}.portrait{width:56%;max-width:160px}}
+    footer {
+      text-align:center;
+      padding:3rem;
+      color:#d6c1a1;
+      font-size:1.1rem;
+    }
   </style>
 </head>
 <body>
-
-  <!-- DUMB TERMINAL INTRO -->
-  <div class="terminal-intro" id="intro">
-    <div class="term-window">
-      <div class="ascii">  _____  _   _  ____  _   _  ____  _____  ____  _____
-  |  __ \| \ | |/ __ \| \ | |/ __ \|  __ \|  _ \|  __ \
-  | |__) |  \| | |  | |  \| | |  | | |__) | |_) | |__) |
-  |  _  /| . ` | |  | | . ` | |  | |  _  /|  _ <|  _  /
-  | | \ \| |\  | |__| | |\  | |__| | | \ \| |_) | | \ \
-  |_|  \_\_| \_|\____/|_| \_|\____/|_|  \_\____/|_|  \_
-</div>
-      <div class="term-line" id="line1"></div>
-      <div class="term-line" id="line2"></div>
-      <div style="height:10px"></div>
-      <div class="term-line fade-out" id="bootDone">Press any key to continue <span class="cursor"></span></div>
+  <!-- Intro Overlay -->
+  <div class="terminal-overlay">
+    <div class="typed-text">m0rph!n3_</div>
+    <div class="ascii-art">
+⣰⣶⣶⣶⣶⡆⢠⣴⣾⣷⣶⡄⠀⢀⣴⣾⣿⣶⣄⠀⠀⠀⣠⣶⣾⣷⡆⢰⣶⣶⡆⣴⣶⣶⣶⣶⣆⣶⣶⣶⣶⣶⣶⣶⣶⣆⢀⣶⣶⡶⠀⠀⠀⠀
+⣿⣿⡿⠿⠿⢁⣿⣿⡿⠻⣿⠁⣰⣿⣿⣿⣿⣿⣿⣆⠀⣼⣿⣿⣿⣿⡇⢸⣿⣿⠀⣿⣿⡿⠿⠿⢸⣿⣿⣿⣿⣿⡇⢿⣿⣿⣾⣿⡿⠁⠀⠀⠀⠀
+⣿⣿⣧⣤⡄⠘⣿⣿⣷⣤⡀⢠⣿⣿⡟⠀⠈⣿⣿⣿⢸⣿⣿⠏⠀⠀⠁⣾⣿⣿⢀⣿⣿⣷⣶⡆⠀⠀⣿⣿⡏⠀⠀⠘⣿⣿⣿⡿⠁⠀⠀⠀⠀⠀
+⢸⣿⣿⣿⣿⠇⠀⠈⠛⣿⣿⣿⢸⣿⣿⡇⠀⢠⣿⣿⡏⢸⣿⣿⡀⠀⢀⠀⣿⣿⡇⢸⣿⣿⠿⠿⠇⠀⢰⣿⣿⡇⠀⠀⠀⣿⣿⣿⠁⠀⠀⠀⠀⠀⠀
+⣸⣿⣿⠀⠀⠀⣼⣷⣴⣿⣿⡿⠘⣿⣿⣿⣿⣿⣿⡟⠀⢸⣿⣿⣿⣿⡿⢸⣿⣿⡇⣼⣿⣿⣤⣤⡄⠀⢸⣿⣿⠁⠀⠀⠀⣿⣿⡏⠀⠀⠀⠀⠀⠀⠀
+⣿⣿⡿⠀⠀⠘⠿⢿⣿⡿⠟⠁⠀⠘⠿⣿⣿⠿⠋⠀⠀⠀⠹⢿⣿⡿⠇⢸⣿⣿⠃⣿⣿⣿⣿⣿⠀⠀⣾⣿⣿⠀⠀⠀⢠⣿⣿⡇
     </div>
   </div>
 
-  <!-- MAIN CONTENT -->
-  <main id="main">
+  <main>
     <header>
-      <h1>Cesare Beccaria — The Code of Justice</h1>
-      <p class="lead">Filósofo y jurista de la Ilustración — ideas que transformaron la pena y la ley.</p>
+      <h1>Cesare Beccaria</h1>
+      <p><em>Filósofo y jurista del Siglo de las Luces</em></p>
     </header>
 
-    <section class="card">
-      <div class="row">
-        <div style="flex:1">
-          <h3 style="margin:0">Breve biografía</h3>
-          <p class="note" style="margin-top:6px">Datos clave: origen, estudios y obra principal.</p>
-          <ul style="margin-top:8px;color:#efe8d9">
-            <li><strong>Nacimiento:</strong> Milán, 1738</li>
-            <li><strong>Formación:</strong> Escuelas jesuitas; estudió leyes en la Universidad de Pavía</li>
-            <li><strong>Inspiración:</strong> La Ilustración — Montesquieu, Rousseau y la crítica a lo arbitrario</li>
-            <li><strong>Obra clave:</strong> <em>De los delitos y las penas</em> (1764)</li>
-          </ul>
-        </div>
-        <div style="width:200px">
-          <img class="portrait" src="https://upload.wikimedia.org/wikipedia/commons/8/83/Cesare_Beccaria.jpg" alt="Cesare Beccaria retrato">
-        </div>
+    <section class="section">
+      <h2>Biografía <span class="chevron">▼</span></h2>
+      <div class="content">
+        <p>Cesare Beccaria nació en Milán en 1738. Fue un jurista, filósofo y economista italiano. Educado en el espíritu del humanismo y la Ilustración, se interesó profundamente por la justicia penal y las leyes.</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Cesare_Beccaria.jpg" alt="Cesare Beccaria">
       </div>
     </section>
 
-    <section class="card">
-      <div class="collapsible" id="principlesToggle">
-        <h3 style="margin:0">Principios de justicia <span class="caret">▾</span></h3>
-      </div>
-      <div class="content" id="principlesContent">
-        <p><strong>No a la tortura:</strong> Rechazo tajante de la tortura como método de investigación o castigo.</p>
-        <p><strong>Proporcionalidad:</strong> La pena debe ser suficiente para prevenir, no para vengar; proporcional al daño.</p>
-        <p><strong>Claridad de las leyes:</strong> El ciudadano debe entender las consecuencias de sus actos; leyes claras reducen la arbitrariedad.</p>
-        <p><strong>Prevención sobre retribución:</strong> El objetivo del castigo es disuadir futuros delitos, no el desquite.</p>
+    <section class="section">
+      <h2>Principales Ideas y Aportaciones <span class="chevron">▼</span></h2>
+      <div class="content">
+        <p>Beccaria abogó por un sistema penal racional, justo y proporcional. Rechazó la tortura y la pena de muerte, proponiendo penas claras y moderadas para prevenir el delito más que castigarlo.</p>
       </div>
     </section>
 
-    <section class="card">
-      <div class="collapsible" id="influenceToggle">
-        <h3 style="margin:0">Influencia moderna <span class="caret">▾</span></h3>
-      </div>
-      <div class="content" id="influenceContent">
-        <p>Beccaria influyó en reformas penales en Europa y América; su pensamiento alimentó debates sobre la pena de muerte, el debido proceso y los derechos individuales que luego aparecen en documentos constitucionales.</p>
+    <section class="section">
+      <h2>Obras Más Importantes <span class="chevron">▼</span></h2>
+      <div class="content">
+        <p>Su obra más influyente fue <em>"De los delitos y las penas"</em> (1764), donde critica las prácticas judiciales de su tiempo y sienta las bases del derecho penal moderno.</p>
       </div>
     </section>
 
-    <section class="card">
-      <div class="collapsible" id="quotesToggle">
-        <h3 style="margin:0">Citas y ideas clave <span class="caret">▾</span></h3>
-      </div>
-      <div class="content" id="quotesContent">
-        <p>“Es mejor prevenir los delitos con leyes sabias que castigarlos con dureza.”</p>
-        <p>“La certeza del castigo, no su severidad, es lo que mayormente detiene al delincuente.”</p>
+    <section class="section">
+      <h2>Impacto en su Época <span class="chevron">▼</span></h2>
+      <div class="content">
+        <p>Su pensamiento tuvo una gran repercusión en Europa. Inspiró reformas judiciales y fue admirado por figuras como Voltaire y Montesquieu.</p>
       </div>
     </section>
+
+    <section class="section">
+      <h2>Influencia en la Actualidad <span class="chevron">▼</span></h2>
+      <div class="content">
+        <p>Sus ideas siguen presentes en los sistemas jurídicos modernos, en los derechos humanos y en la abolición de la pena de muerte en numerosos países.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Reflexión <span class="chevron">▼</span></h2>
+      <div class="content">
+        <p>Beccaria sigue siendo un faro de justicia y razón. Su énfasis en la humanidad, la proporcionalidad y la prevención son pilares de un mundo más ético y justo.</p>
+      </div>
+    </section>
+
+    <div class="morphine-box">
+     MORPHINE STRUCTURE (ASCII)  
+       O  
+       ║  
+  HO─C─CH₂  
+     ║    ║  
+     N───CH₃  
+     ║  
+     CH  
+     ║  
+     O  
+    </div>
 
     <footer>
-      <p>Hecho con elegancia por <strong id="author">m0rph!n3_</strong> — (haz click 5 veces aquí para revelar un terminal secreto)</p>
+      <p>Hecho con elegancia por <strong>m0rph!n3_</strong></p>
     </footer>
   </main>
 
-  <!-- secret terminal button -->
-  <div class="secret-wrap">
-    <button class="secret-btn" id="secretBtn" aria-hidden="true">[ simulate_justice.exe ]</button>
-  </div>
-
-  <!-- LOGIN / SIM MODAL (terminal style) -->
-  <div class="modal-backdrop" id="modal">
-    <div class="login-term" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
-      <h2 id="loginTitle" style="margin-top:0;color:#cfffd0">LOGIN: Justice System v1.0</h2>
-      <div class="prompt">
-        <div style="display:flex;gap:.8rem;flex-wrap:wrap">
-          <div style="flex:1">
-            <label for="user">Usuario</label>
-            <input id="user" type="text" autocomplete="username" placeholder="usuario">
-          </div>
-          <div style="flex:1">
-            <label for="pass">Contraseña</label>
-            <input id="pass" type="password" autocomplete="current-password" placeholder="contraseña">
-          </div>
-        </div>
-
-        <div class="login-actions">
-          <button class="btn" id="loginBtn">Conectar</button>
-          <button class="btn" id="cancelBtn">Cancelar</button>
-        </div>
-        <div class="note" id="loginNote">Credenciales: usuario <code>Hello</code> — contraseña <code>Friend</code>. 3 intentos fallidos bloquean el sistema.</div>
-      </div>
-
-      <!-- Terminal simulation area (hidden until login) -->
-      <div id="simArea" style="display:none;margin-top:12px">
-        <div class="terminal-sim" id="termOut">[Simulador inactivo] — espera entrada.</div>
-        <div class="input-row">
-          <input id="simInput" class="sim-input" placeholder="Escribe aquí (p.ej. 'robo con violencia')">
-          <button class="btn primary" id="sendBtn">Enviar</button>
-        </div>
-        <div class="note" style="margin-top:.5rem">Modo: pregunta-respuesta. Escribe 'reset' para reiniciar la sesión.</div>
-      </div>
-
-    </div>
-  </div>
-
   <script>
-    // --- Intro typing animation (dumb terminal) ---
-    (function(){
-      const line1 = document.getElementById('line1');
-      const line2 = document.getElementById('line2');
-      const intro = document.getElementById('intro');
-      const main = document.getElementById('main');
-      const bootDone = document.getElementById('bootDone');
-
-      const seq1 = "booting justice-core...";
-      const seq2 = "loading modules: law, reason, proportion...";
-      function typeText(el, text, delay=30){
-        el.textContent = '';
-        let i=0; const t = setInterval(()=>{ el.textContent += text.charAt(i++); if(i>=text.length) clearInterval(t); }, delay);
-        return t;
-      }
-
-      // play typing, then show "press any key" and wait for key or click
-      typeText(line1, seq1, 28);
-      setTimeout(()=> typeText(line2, seq2, 20), seq1.length*28 + 120);
-
-      // after both typed, show bootDone (it fades out automatically with CSS)
-      setTimeout(()=>{
-        bootDone.style.opacity = '1';
-        // wait for user interaction
-        function proceed(){ intro.style.pointerEvents='none'; intro.classList.add('fade-out'); setTimeout(()=>{ intro.style.display='none'; main.classList.add('show'); },900); window.removeEventListener('keydown', proceed); window.removeEventListener('click', proceed); }
-        window.addEventListener('keydown', proceed); window.addEventListener('click', proceed);
-      }, 2400);
-    })();
-
-    // --- Collapsibles ---
-    document.querySelectorAll('.collapsible').forEach(el => {
-      el.addEventListener('click', ()=>{
-        el.parentElement.classList.toggle('open');
-        const caret = el.querySelector('.caret'); if(caret) caret.style.transform = el.parentElement.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+    document.querySelectorAll('.section').forEach(section => {
+      const header = section.querySelector('h2');
+      header.addEventListener('click', () => {
+        section.classList.toggle('open');
       });
     });
-
-    // --- Secret reveal (click author 5x) ---
-    (function(){
-      const author = document.getElementById('author');
-      const secretBtn = document.getElementById('secretBtn');
-      let clicks=0, timer;
-      author.addEventListener('click', ()=>{
-        clicks++; clearTimeout(timer); timer=setTimeout(()=>clicks=0,1400);
-        if(clicks>=5){ secretBtn.classList.add('visible'); secretBtn.setAttribute('aria-hidden','false'); clicks=0; }
-      });
-      // keyboard alternative: type JUSTICE sequence
-      let seq=''; const target='JUSTICE';
-      window.addEventListener('keyup', e=>{ seq += e.key.toUpperCase(); if(!target.startsWith(seq)) seq=''; if(seq===target){ secretBtn.classList.add('visible'); secretBtn.setAttribute('aria-hidden','false'); seq=''; } if(seq.length>target.length) seq=''; });
-    })();
-
-    // --- Login & Simulation logic ---
-    const secretBtn = document.getElementById('secretBtn');
-    const modal = document.getElementById('modal');
-    const loginBtn = document.getElementById('loginBtn');
-    const cancelBtn = document.getElementById('cancelBtn');
-    const userIn = document.getElementById('user');
-    const passIn = document.getElementById('pass');
-    const loginNote = document.getElementById('loginNote');
-    const simArea = document.getElementById('simArea');
-    const termOut = document.getElementById('termOut');
-    const simInput = document.getElementById('simInput');
-    const sendBtn = document.getElementById('sendBtn');
-
-    const VALID_USER = 'Hello';
-    const VALID_PASS = 'Friend';
-    let attempts = 0; let locked = false;
-
-    function openModal(){ modal.classList.add('show'); userIn.focus(); document.body.style.overflow='hidden'; }
-    function closeModal(){ modal.classList.remove('show'); document.body.style.overflow='auto'; resetLogin(); }
-
-    secretBtn.addEventListener('click', openModal);
-    cancelBtn.addEventListener('click', closeModal);
-
-    function resetLogin(){ attempts=0; locked=false; loginNote.textContent = "Credenciales: usuario Hello — contraseña Friend. 3 intentos fallidos bloquean el sistema."; simArea.style.display='none'; termOut.textContent='[Simulador inactivo] — espera entrada.'; simInput.value=''; }
-
-    function showLocked(){ loginNote.textContent = 'SISTEMA BLOQUEADO: Demasiados intentos fallidos. Reinicia la página para reintentar.'; locked=true; }
-
-    loginBtn.addEventListener('click', ()=>{
-      if(locked) return;
-      const u = userIn.value.trim(); const p = passIn.value;
-      if(u===VALID_USER && p===VALID_PASS){
-        // success
-        loginNote.textContent = 'Acceso concedido. Bienvenido.';
-        attempts = 0;
-        // reveal sim area
-        setTimeout(()=>{ simArea.style.display='block'; simInput.focus(); termOut.textContent = "[Terminal Simulado] Bienvenido. Escribe el delito y presiona Enviar. (Ej: 'hurto', 'homicidio con intención')
-"; },300);
-      } else {
-        attempts++; loginNote.textContent = `Credenciales incorrectas. Intentos: ${attempts}/3.`;
-        if(attempts>=3){ showLocked(); }
-      }
-    });
-
-    // Terminal-like Q&A flow
-    // We'll keep a simple state machine: 0 = expect crime, 1 = expect intent (yes/no), 2 = expect severity (minor/major) -> then compute verdict
-    let state = 0; let caseData = {};
-
-    function appendTerm(text){ termOut.textContent += text + '
-'; termOut.scrollTop = termOut.scrollHeight; }
-
-    sendBtn.addEventListener('click', handleInput);
-    simInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') handleInput(); });
-
-    function handleInput(){
-      if(!simArea || simArea.style.display==='none') return;
-      const raw = simInput.value.trim(); if(!raw) return;
-      appendTerm(`> ${raw}`);
-      // reset command
-      if(raw.toLowerCase()==='reset'){ state=0; caseData={}; appendTerm('[Simulador] reiniciado. Describe el delito.'); simInput.value=''; return; }
-
-      if(state===0){ caseData.crime = raw; state=1; appendTerm('[Simulador] ¿Se ha probado la intención? (responde: sí / no)'); simInput.value=''; return; }
-      if(state===1){ const r = raw.toLowerCase(); if(r==='sí' || r==='si' || r==='s' || r==='yes'){ caseData.intent = true; } else caseData.intent = false; state=2; appendTerm('[Simulador] Gravedad del delito? (menor / mayor)'); simInput.value=''; return; }
-      if(state===2){ const r = raw.toLowerCase(); caseData.severity = (r.includes('may') || r.includes('gr') || r.includes('mayor')) ? 'major' : 'minor'; state=3; // compute
-        appendTerm('[Simulador] Procesando caso según principios de Beccaria...'); setTimeout(()=>{ const result = computeBeccaria(caseData); appendTerm('
-' + result.summary); appendTerm('
-[FIN DEL SIMULADOR — escribe "reset" para iniciar otro caso]'); simInput.value=''; state=0; caseData={}; },800);
-        return; }
-    }
-
-    // Simple judgement engine inspired by Beccaria
-    function computeBeccaria(data){
-      // base score from severity
-      let score = data.severity==='major' ? 75 : 35; // higher => more likely to convict
-      // tweak for intent
-      score += data.intent ? 18 : -10;
-      // if crime description mentions violence keywords, nudge
-      const violentKeywords = ['viol','muerte','golpe','fuerz','arma','ataque','asesin'];
-      const txt = data.crime.toLowerCase();
-      for(const k of violentKeywords) if(txt.includes(k)) score += 12;
-
-      // Beccaria bias: ambiguity reduction — if crime description short/unclear, favor acquittal
-      const ambiguity = Math.max(0, 40 - data.crime.length); // shorter descriptions => more ambiguous
-      score -= Math.round((ambiguity/40)*20); // up to -20
-
-      score = Math.max(0, Math.min(100, Math.round(score)));
-
-      // verdict thresholds
-      let verdict=''; let reasoning='';
-      if(score >= 70){ verdict='CONDENADO'; reasoning='La evidencia e intención (o violencia) son suficientes. Aplicar pena proporcionada y preventiva.'; }
-      else if(score >= 45){ verdict='VEREDICTO INCONCLUSO'; reasoning='Caso ambiguo: según Beccaria se debe privilegiar la moderación y la prevención; pena mínima o libertad condicional.'; }
-      else { verdict='ABSOLUCIÓN'; reasoning='Insuficiencia de prueba o alta ambigüedad; Beccaria favorece la libertad ante la duda.'; }
-
-      const summary = `--- RESULTADO ---
-Delito: ${data.crime}
-Intención probada: ${data.intent ? 'Sí' : 'No'}
-Gravedad: ${data.severity}
-Puntuación (sim): ${score}/100
-Veredicto: ${verdict}
-Motivo: ${reasoning}
-(Nota: el motor simula principios beccarianos: proporcionalidad, rechazo a la tortura y sesgo hacia la prevención cuando la certeza existe.)`;
-      return {score,verdict,summary};
-    }
-
-    // close modal on outside click
-    modal.addEventListener('click', (e)=>{ if(e.target===modal) { closeModal(); } });
-    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeModal(); } });
-
-    // initialize
-    resetLogin();
   </script>
 </body>
 </html>
+
